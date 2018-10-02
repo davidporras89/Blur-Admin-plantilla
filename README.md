@@ -1,2 +1,3 @@
 # Blur-Admin-plantilla
-Plantilla 
+Plantilla
+editada
