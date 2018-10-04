@@ -1,0 +1,131 @@
+<div class="widgets">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div ba-panel ba-panel-title="Prueba Técnica" ba-panel-class="with-scroll">
+                <ba-wizard>
+                    <ba-wizard-step title="Paso 1" form="vm.pasoUnoForm">
+                        <form name="vm.pasoUnoForm" novalidate>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group has-feedback" ng-class="{'has-error': vm.pasoUnoForm.nombre.$invalid && (vm.pasoUnoForm.nombre.$dirty || vm.pasoUnoForm.$submitted)}">
+                                        <label for="exampleNombre">Nombre</label>
+                                        <input type="text" class="form-control" id="exampleNombre" name="nombre" placeholder="Nombre" ng-model="vm.pasoUno.nombre" required>
+                                        <span class="help-block error-block basic-block">Nombre Requerido</span>
+                                    </div>
+                                    <div class="form-group has-feedback"
+                                         ng-class="{'has-error': vm.pasoUnoForm.apellido.$invalid && (vm.pasoUnoForm.apellido.$dirty || vm.pasoUnoForm.$submitted)}">
+                                        <label for="exampleApellido">Apellido</label>
+                                        <input type="text" class="form-control" id="exampleApellido" name="apellido" placeholder="Apellido" ng-model="vm.pasoUno.apellido" required>
+                                        <span class="help-block error-block basic-block">Apellido Requerido</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="datepicker row">
+                                    <div class="col-xlg-6 col-md-12 col-sm-6" ng-controller="datepickerpopupCtrl" ng-class="{'has-error': vm.pasoUnoForm.fecha.$invalid && (vm.pasoUnoForm.fecha.$dirty || vm.pasoUnoForm.$submitted)}">
+                                      <label>Seleccione fecha de nacimiento:</label>
+                                        <p class="input-group">
+                                            <input type="text" class="form-control" name="fecha" uib-datepicker-popup="{{format}}" datepicker-options="options" ng-model="vm.pasoUno.fecha" is-open="opened" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" show-button-bar="false" />
+                                          <span class="input-group-btn" required>
+                                            <button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                          </span>
+                                        </p>
+                                        <span class="help-block error-block basic-block">Fecha Requerida</span>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                        </form>
+                    </ba-wizard-step>
+                    <ba-wizard-step title="Paso 2" form="vm.pasoDosForm" ng-init="CargarDepartamentos()">
+                        <form name="vm.pasoDosForm" novalidate>
+                          <div class="row">
+                            <div class="col-md-6">
+                              <div class="form-group" ng-class="{'has-error': vm.pasoDosForm.departamento.$invalid && (vm.pasoDosForm.departamento.$dirty || vm.pasoDosForm.$submitted)}">
+                                  <label for="Departamento">Departamento de residencia</label>
+                                  <select class="form-control" ng-model="vm.pasoDos.departamento" name="departamento" title="Departamento" ng-change="CargarCiudades()" required>
+                                    <option value="" disabled>Seleccione Departamento</option>
+                                    <option ng-repeat="lisDep in listaDepartamentos">{{lisDep.nombre_departamento}}</option>
+                                  </select>
+                                  <span class="help-block error-block basic-block">Departamento Requerido</span>
+                              </div>
+                              <div class="form-group" ng-class="{'has-error': vm.pasoDosForm.ciudad.$invalid && (vm.pasoDosForm.ciudad.$dirty || vm.pasoDosForm.$submitted)}">
+                                  <label for="Ciudad">Ciudad de residencia</label>
+                                  <select class="form-control" ng-model="vm.pasoDos.ciudad" name="ciudad" title="Ciudad" ng-change="CargarCodigos()" required>
+                                      <option value="" disabled>Seleccione Ciudad</option>
+                                      <option ng-repeat="lisCiu in listaCiudades">{{lisCiu.nombre_municipio}}</option>
+                                  </select>
+                                  <span class="help-block error-block basic-block">Ciudad Requerida</span>
+                              </div>
+                              <div class="form-group" ng-class="{'has-error': vm.pasoDosForm.postal.$invalid && (vm.pasoDosForm.postal.$dirty || vm.pasoDosForm.$submitted)}">
+                                  <label for="postal">Código Postal</label>
+                                  <select class="form-control" ng-model="vm.pasoDos.codigo" name="postal" title="Códido Postal" required>
+                                      <option value="" disabled>Seleccione Códido Postal</option>
+                                      <option ng-repeat="lisCod in listaCodigos">{{lisCod.codigo_postal}}</option>
+                                  </select>
+                                  <span class="help-block error-block basic-block">Códido Postal Requerido</span>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group has-feedback" ng-class="{'has-error': vm.pasoDosForm.telefono.$invalid && (vm.pasoDosForm.telefono.$dirty || vm.pasoDosForm.$submitted)}">
+                                    <label for="exampleTelefono">Telefono</label>
+                                    <input type="number" class="form-control" id="exampleTelefono" name="telefono" placeholder="telefono" ng-model="vm.pasoDos.telefono">
+                                </div>
+                                <div class="form-group has-feedback"
+                                     ng-class="{'has-error': vm.pasoDosForm.celular.$invalid && (vm.pasoDosForm.celular.$dirty || vm.pasoDosForm.$submitted)}">
+                                    <label for="exampleCelular">Celular</label>
+                                    <input type="number" class="form-control" id="exampleCelular" name="celular" placeholder="Celular" ng-model="vm.pasoDos.celular" required>
+                                    <span class="help-block error-block basic-block">Celular Requerido</span>
+                                </div>
+                            </div>
+                          </div>
+                        </form>
+                    </ba-wizard-step>
+                    <ba-wizard-step title="Paso 3"  form="vm.pasoTresForm">
+                        <form name="vm.pasoTresForm" novalidate>
+                            <div class="row">
+                              <div class="col-md-6">
+                                  <div class="form-group has-feedback" ng-class="{'has-error': vm.pasoTresForm.email.$invalid && (vm.pasoTresForm.email.$dirty || vm.pasoTresForm.$submitted)}">
+                                      <label for="email">Email</label>
+                                      <input type="email" class="form-control" id="email" name="email" placeholder="Email" ng-model="vm.pasoTres.email" required>
+                                      <span class="help-block error-block basic-block">Se requiere un correo electrónico adecuado</span>
+                                  </div>
+                                  <div class="form-group" ng-class="{'has-error': !vm.arePersonalInfoEmailEqual() && (vm.pasoTresForm.confemail.$dirty || vm.pasoTresForm.$submitted)}">
+                                      <label for="confemail">Confirmar Email</label>
+                                      <input type="email" class="form-control" id="confemail" name="confemail" placeholder="Confirmar Email" ng-model="vm.pasoTres.confemail" required>
+                                      <span class="help-block error-block basic-block">Los emails deben coincidir</span>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="form-group" ng-class="{'has-error': vm.pasoTresForm.password.$invalid && (vm.pasoTresForm.password.$dirty || vm.pasoTresForm.$submitted)}">
+                                      <label for="exampleInputPassword1">Password</label>
+                                      <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password" ng-model="vm.pasoTres.password" required>
+                                      <span class="help-block error-block basic-block">Required</span>
+                                  </div>
+                                  <div class="form-group"  ng-class="{'has-error': !vm.arePersonalInfoPasswordsEqual() && (vm.pasoTresForm.confirmPassword.$dirty || vm.pasoTresForm.$submitted)}">
+                                      <label for="exampleInputConfirmPassword1">Confirm Password</label>
+                                      <input type="password" class="form-control" id="exampleInputConfirmPassword1" name="confirmPassword" placeholder="Confirm Password" ng-model="vm.pasoTres.confirmPassword" required>
+                                      <span class="help-block error-block basic-block">Las contraseñas deben coincidir</span>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="checkbox" ng-class="{'has-error': vm.pasoTresForm.terminos.$invalid && (vm.pasoTresForm.terminos.$dirty || vm.pasoTresForm.$submitted)}">
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" name="terminos" required="required">
+                                    <span>Acepto los términos y condiciones</span>
+                                </label>
+                                <span class="help-block error-block basic-block">Debe aceptar terminos y condiciones</span>
+                            </div>
+                        </form>
+                    </ba-wizard-step>
+                    <ba-wizard-step title="Final">
+                        <form class="form-horizontal" name="vm.finishForm" novalidate>
+                          ¡Felicidades! ¡Has completado con éxito el formulario!
+                        </form>
+                    </ba-wizard-step>
+                </ba-wizard>
+            </div>
+        </div>
+    </div>
+
+</div>
